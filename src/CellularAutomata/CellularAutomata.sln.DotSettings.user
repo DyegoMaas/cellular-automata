@@ -1,0 +1,7 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=c0f170f1_002Dd41b_002D415b_002Dae55_002D85a5b7514e43/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="A cell should have a state" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.CellTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.GridTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
