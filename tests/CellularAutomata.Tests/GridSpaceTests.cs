@@ -67,6 +67,17 @@ public class GridSpaceTests
     }
     
     private static GridNode NewGridSpace() => new GridNode(new Cell(CellState.White));
+    
+    [Fact(DisplayName = "Direction should point to a direction")]
+    public void ADirectionShouldPointSomewhere()
+    {
+        var instantiateInvalidDirection = () =>
+        {
+            var invalidDirection = new Direction(0, 0);
+        };
+
+        instantiateInvalidDirection.Should().Throw<InvalidDirectionException>().WithMessage("Direction cannot be 0,0");
+    }
 
     [Theory(DisplayName = "Each connection should have opposite directions")]
     [InlineData(1, 0, -1, 0)]
