@@ -13,42 +13,42 @@ public class GridSpaceTests
     public void AGridSpaceShouldHaveAnUniqueIdentifier()
     {
         var cell = new Cell(CellState.White);
-        GridSpace space = new(cell);
+        GridNode node = new(cell);
 
-        space.Identifier.Should().NotBeEmpty();
-        space.Should().Be(space, "a space is unique by its Identifier");
+        node.Identifier.Should().NotBeEmpty();
+        node.Should().Be(node, "a space is unique by its Identifier");
     }
     
     [Fact(DisplayName = "Two grid spaces are always different")]
     public void TwoGridSpacesAreDifferent()
     {
         var cell = new Cell(CellState.White);
-        GridSpace spaceA = new(cell);
-        GridSpace spaceB = new(cell);
+        GridNode nodeA = new(cell);
+        GridNode nodeB = new(cell);
 
-        spaceA.Should().NotBe(spaceB);
-        spaceA.Identifier.Should().NotBe(spaceB.Identifier);
+        nodeA.Should().NotBe(nodeB);
+        nodeA.Identifier.Should().NotBe(nodeB.Identifier);
     }
     
     [Fact(DisplayName = "A grid space should contain a cell")]
     public void AGridSpaceShouldContainACell()
     {
         var cell = new Cell(CellState.White);
-        GridSpace space = new(cell);
+        GridNode node = new(cell);
 
-        space.Cell.Should().Be(cell);
+        node.Cell.Should().Be(cell);
     }
 
     [Fact(DisplayName = "A grid space can have its cell replaced by a new one")]
     public void ItShouldBePossibleToReplaceTheCellOccupyingASpace()
     {
         var oldCell = new Cell(CellState.White);
-        GridSpace space = new(oldCell);
+        GridNode node = new(oldCell);
 
         var newCell = new Cell(CellState.Black);
-        space.ReplaceCell(newCell);
+        node.ReplaceCell(newCell);
 
-        space.Cell.Should().Be(newCell);
+        node.Cell.Should().Be(newCell);
     }
 
     [Fact(DisplayName = "A grid is formed by a graph of interconnected grid spaces")]
@@ -60,13 +60,13 @@ public class GridSpaceTests
         GridSpaceConnection.Connect(spaceA, to: spaceB, new Direction(1, 0));
 
         IEnumerable<GridSpaceConnection> spacesConnectedToSpaceA = spaceA.Connections;
-        spacesConnectedToSpaceA.First().TargetSpace.Should().Be(spaceB);
+        spacesConnectedToSpaceA.First().TargetNode.Should().Be(spaceB);
         
         IEnumerable<GridSpaceConnection> spacesConnectedToSpaceB = spaceB.Connections;
-        spacesConnectedToSpaceB.First().TargetSpace.Should().Be(spaceA);
+        spacesConnectedToSpaceB.First().TargetNode.Should().Be(spaceA);
     }
     
-    private static GridSpace NewGridSpace() => new GridSpace(new Cell(CellState.White));
+    private static GridNode NewGridSpace() => new GridNode(new Cell(CellState.White));
 
     [Theory(DisplayName = "Each connection should have opposite directions")]
     [InlineData(1, 0, -1, 0)]
@@ -107,7 +107,7 @@ public class GridSpaceTests
         GridSpaceConnection.Connect(centralSpace, to: bottomLeftSpace, new Direction(-1, 1));
         GridSpaceConnection.Connect(centralSpace, to: bottomRightSpace, new Direction(1, 1));
     
-        var surroundingSpaces = centralSpace.Connections.Select(x => x.TargetSpace);
+        var surroundingSpaces = centralSpace.Connections.Select(x => x.TargetNode);
         surroundingSpaces.Should().Contain(new[]
         {
             leftSpace,

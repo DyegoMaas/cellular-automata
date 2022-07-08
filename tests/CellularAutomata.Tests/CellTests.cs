@@ -28,10 +28,10 @@ public class CellTests
 
 public static class GridSpaceTestExtensions
 {
-    public static void ShouldBeConnectedTo(this GridSpace gridSpace, GridSpace otherSpace, Direction inDirection)
+    public static void ShouldBeConnectedTo(this GridNode gridNode, GridNode otherNode, Direction inDirection)
     {
-        var gridSpaceConnection = gridSpace.Connections.FirstOrDefault(x => x.TargetSpace == otherSpace);
-        gridSpaceConnection.Should().NotBeNull($"Space {gridSpace} should have a connection to space {otherSpace}");
+        var gridSpaceConnection = gridNode.Connections.FirstOrDefault(x => x.TargetNode == otherNode);
+        gridSpaceConnection.Should().NotBeNull($"Space {gridNode} should have a connection to space {otherNode}");
         gridSpaceConnection.Direction.Should().Be(inDirection);
     }
 }

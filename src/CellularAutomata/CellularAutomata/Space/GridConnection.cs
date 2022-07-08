@@ -2,16 +2,16 @@
 
 public class GridSpaceConnection
 {
-    public GridSpace TargetSpace { get; }
+    public GridNode TargetNode { get; }
     public Direction Direction { get; }
     
-    private GridSpaceConnection(GridSpace targetSpace, Direction direction)
+    private GridSpaceConnection(GridNode targetNode, Direction direction)
     {
-        TargetSpace = targetSpace;
+        TargetNode = targetNode;
         Direction = direction;
     }
 
-    public static void Connect(GridSpace origin, GridSpace to, Direction direction)
+    public static void Connect(GridNode origin, GridNode to, Direction direction)
     {
         var connectionA = new GridSpaceConnection(to, direction);
 

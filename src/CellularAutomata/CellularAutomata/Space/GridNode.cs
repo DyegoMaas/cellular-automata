@@ -2,9 +2,9 @@
 
 namespace CellularAutomata.Space;
 
-public class GridSpace
+public class GridNode
 {
-    public GridSpace(Cell cell)
+    public GridNode(Cell cell)
     {
         Cell = cell;
         Identifier = Guid.NewGuid();
@@ -26,7 +26,7 @@ public class GridSpace
         _connections.Add(connection);
     }
     
-    protected bool Equals(GridSpace other)
+    protected bool Equals(GridNode other)
     {
         return Identifier.Equals(other.Identifier);
     }
@@ -36,7 +36,7 @@ public class GridSpace
         if (ReferenceEquals(null, obj)) return false;
         if (ReferenceEquals(this, obj)) return true;
         if (obj.GetType() != this.GetType()) return false;
-        return Equals((GridSpace) obj);
+        return Equals((GridNode) obj);
     }
 
     public override int GetHashCode()
@@ -44,14 +44,14 @@ public class GridSpace
         return Identifier.GetHashCode();
     }
 
-    public static bool operator ==(GridSpace spaceA, GridSpace spaceB)
+    public static bool operator ==(GridNode nodeA, GridNode nodeB)
     {
-        return spaceA.Identifier == spaceB.Identifier;
+        return nodeA.Identifier == nodeB.Identifier;
     } 
     
-    public static bool operator !=(GridSpace spaceA, GridSpace spaceB)
+    public static bool operator !=(GridNode nodeA, GridNode nodeB)
     {
-        return spaceA.Identifier != spaceB.Identifier;
+        return nodeA.Identifier != nodeB.Identifier;
     }
 
     public override string ToString()
