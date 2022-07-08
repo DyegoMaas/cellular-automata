@@ -55,6 +55,7 @@ public class ElementaryAutomataTests
         GridNode? fourthGridNode = navigator.GetNext();
         GridNode? fifthGridNode = navigator.GetNext();
         GridNode? nullNode = navigator.GetNext();
+        GridNode? nullNode2 = navigator.GetNext();
 
         firstGridNode!.Cell.State.Should().Be(CellState.Black);
         secondGridNode!.Cell.State.Should().Be(CellState.White);
@@ -63,6 +64,8 @@ public class ElementaryAutomataTests
         fifthGridNode!.Cell.State.Should().Be(CellState.White);
         nullNode.Should().BeNull("navigated the whole automata");
     }
+    
+    // TODO navigator.GetNextNeighrhood()
     
     // [Fact(DisplayName = "A rule should produce a new state based on the current state of a cell and the previous state of surrounding cells")]
     // public void ShouldProduceANewStateBasedOnSurroundingCells()
@@ -106,6 +109,7 @@ public class OneDimensionalNavigator : Navigator
     private readonly Direction _traverseDirection;
     private GridNode? _currentNode;
     private Automata _automata;
+    private int _index = 0;
 
     public OneDimensionalNavigator(Automata automata, Direction traverseDirection)
     {
@@ -113,128 +117,53 @@ public class OneDimensionalNavigator : Navigator
         
         _traverseDirection = traverseDirection;
         var firstNode = automata.GridNodes.First();
-        _currentNode = FindNavigationStartPoint(traverseDirection, firstNode) ?? firstNode;
+        _currentNode = FindNavigationStartPoint(traverseDirection, firstNode);
+        _index = 0;
     }
 
-    private GridNode? FindNavigationStartPoint(Direction traverseDirection, GridNode node)
+    private GridNode FindNavigationStartPoint(Direction traverseDirection, GridNode node)
     {
         var oppositeDirection = traverseDirection.Opposite();
-       
-        var selectedConnection = node.Connections
-            .FirstOrDefault(x => x.Direction.X == oppositeDirection.X);
-        var lastConnection = selectedConnection;
-        while (selectedConnection != null)
+        _currentNode = node;
+
+        var nextNode = node;
+        var lastNode = node;
+        while (nextNode is not null)
         {
-            selectedConnection = selectedConnection.TargetNode.Connections
-                .FirstOrDefault(x => x.Direction.X == oppositeDirection.X);
-            if (selectedConnection != null)
+            nextNode = GetNext(oppositeDirection);
+            if (nextNode is not null)
             {
-                lastConnection = selectedConnection;
+                lastNode = nextNode;
             }
         }
 
-        return lastConnection?.TargetNode;
+        return lastNode;
     }
-    
-    public override GridNode? GetNext()
+
+    public override GridNode? GetNext() => GetNext(_traverseDirection);
+
+    private GridNode? GetNext(Direction direction)
     {
+        if (_index == 0)
+        {
+            _index++;
+            return _currentNode;
+        }
+
         if (_currentNode is null)
             return null;
-
-        var currentNode = _currentNode;
+        
         var selectedConnection = _currentNode.Connections
-            .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
+            .FirstOrDefault(x => x.Direction.X == direction.X);
         _currentNode = selectedConnection?.TargetNode; 
-        return currentNode;
+        return _currentNode;
     }
-
-    // public override GridNode? GetNext()
-    // {
-    //     if (_navigationStartPoint is null)
-    //         return null;
-    //    
-    //     var selectedConnection = _navigationStartPoint.Connections
-    //         .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
-    //     var lastConnection = selectedConnection;
-    //     while (selectedConnection != null)
-    //     {
-    //         selectedConnection = selectedConnection.TargetNode.Connections
-    //             .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
-    //         if (selectedConnection != null)
-    //         {
-    //             lastConnection = selectedConnection;
-    //         }
-    //     }
-    //
-    //     return lastConnection?.TargetNode;
-    // }
 }
-
-// public class OneDimensionalNavigator2 : Navigator
-// {
-//     private readonly GridNode[] _gridNodes;
-//     private readonly Direction _traverseDirection;
-//
-//     public OneDimensionalNavigator2(Automata automata, Direction traverseDirection)
-//     {
-//         _traverseDirection = traverseDirection;
-//         _gridNodes = automata.GridNodes;
-//     }
-//
-//     public override GridNode? GetNext()
-//     {
-//         _gridNodes.fir
-//         return null;
-//     }
-// }
 
 public abstract class Navigator
 {
     public abstract GridNode? GetNext();
 }
-
-// public class LeftToRightNavigator : Navigator
-// {
-//     private readonly Automata _automata;
-//     private int _index = 0;
-//
-//     public LeftToRightNavigator(Automata automata)
-//     {
-//         _automata = automata;
-//     }
-//
-//     public override GridNode? GetNext()
-//     {
-//         var nodes = _automata.GridNodes;
-//         if (_index == nodes.Length)
-//             return null;
-//         
-//         var currentNode = nodes[_index++];
-//         return currentNode;
-//     }
-// }
-//
-// public class RightToLeftNavigator : Navigator
-// {
-//     private readonly Automata _automata;
-//     private int _index = 0;
-//
-//     public RightToLeftNavigator(Automata automata)
-//     {
-//         _automata = automata;
-//         _index = automata.GridNodes.Length;
-//     }
-//
-//     public override GridNode? GetNext()
-//     {
-//         var nodes = _automata.GridNodes;
-//         if (_index == 0)
-//             return null;
-//         
-//         var currentNode = nodes[--_index];
-//         return currentNode;
-//     }
-// }
 
 public class Automata
 {
