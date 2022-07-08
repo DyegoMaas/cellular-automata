@@ -150,3 +150,13 @@ public class GridSpaceTests
         centralSpace.ShouldBeConnectedTo(bottomRightSpace, inDirection: new Direction(1, 1));
     }
 }
+
+public static class GridSpaceTestExtensions
+{
+    public static void ShouldBeConnectedTo(this GridNode gridNode, GridNode otherNode, Direction inDirection)
+    {
+        var gridSpaceConnection = gridNode.Connections.FirstOrDefault(x => x.TargetNode == otherNode);
+        gridSpaceConnection.Should().NotBeNull($"Space {gridNode} should have a connection to space {otherNode}");
+        gridSpaceConnection.Direction.Should().Be(inDirection);
+    }
+}

@@ -1,6 +1,4 @@
-using System.Linq;
 using CellularAutomata.Cells;
-using CellularAutomata.GridSpace;
 using FluentAssertions;
 using Xunit;
 
@@ -23,15 +21,5 @@ public class CellTests
         var newCell = cell with {State = CellState.Black};
 
         newCell.State.Should().Be(CellState.Black);
-    }
-}
-
-public static class GridSpaceTestExtensions
-{
-    public static void ShouldBeConnectedTo(this GridNode gridNode, GridNode otherNode, Direction inDirection)
-    {
-        var gridSpaceConnection = gridNode.Connections.FirstOrDefault(x => x.TargetNode == otherNode);
-        gridSpaceConnection.Should().NotBeNull($"Space {gridNode} should have a connection to space {otherNode}");
-        gridSpaceConnection.Direction.Should().Be(inDirection);
     }
 }
