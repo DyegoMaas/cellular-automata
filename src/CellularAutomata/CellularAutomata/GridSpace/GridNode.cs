@@ -14,7 +14,7 @@ public class GridNode
 
     public Guid Identifier { get; }
     public Cell Cell { get; private set; }
-    public IEnumerable<GridSpaceConnection> Connections => _connections;
+    public IList<GridSpaceConnection> Connections => _connections;
 
     public void ReplaceCell(Cell newCell)
     {

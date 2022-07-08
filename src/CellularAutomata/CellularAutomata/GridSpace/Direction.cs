@@ -14,4 +14,6 @@ public record Direction
     public int Y { get; }
 
     public int X { get; }
+
+    public Direction Opposite() => new(X * -1, Y * -1);
 }

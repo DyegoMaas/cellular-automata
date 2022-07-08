@@ -20,7 +20,7 @@ public class ElementaryAutomataTests
             CellState.Black,
         });
 
-        LeftToRightNavigator navigator = new LeftToRightNavigator(elementaryAutomata);
+        Navigator navigator = new OneDimensionalNavigator(elementaryAutomata, traverseDirection: new Direction(1, 0));
         GridNode? firstGridNode = navigator.GetNext();
         GridNode? secondGridNode = navigator.GetNext();
         GridNode? thirdGridNode = navigator.GetNext();
@@ -48,7 +48,7 @@ public class ElementaryAutomataTests
             CellState.Black,
         });
 
-        RightToLeftNavigator navigator = new RightToLeftNavigator(elementaryAutomata);
+        Navigator navigator = new OneDimensionalNavigator(elementaryAutomata, traverseDirection: new Direction(-1, 0));
         GridNode? firstGridNode = navigator.GetNext();
         GridNode? secondGridNode = navigator.GetNext();
         GridNode? thirdGridNode = navigator.GetNext();
@@ -101,55 +101,147 @@ public class ElementaryAutomataTests
     private static GridNode NewGridSpace(CellState state) => new GridNode(new Cell(state));
 }
 
-public class LeftToRightNavigator
+public class OneDimensionalNavigator : Navigator
 {
-    private readonly Automata _automata;
-    private int _index = 0;
+    private readonly Direction _traverseDirection;
+    private GridNode? _currentNode;
+    private Automata _automata;
 
-    public LeftToRightNavigator(Automata automata)
+    public OneDimensionalNavigator(Automata automata, Direction traverseDirection)
     {
         _automata = automata;
+        
+        _traverseDirection = traverseDirection;
+        var firstNode = automata.GridNodes.First();
+        _currentNode = FindNavigationStartPoint(traverseDirection, firstNode) ?? firstNode;
     }
 
-    public GridNode? GetNext()
+    private GridNode? FindNavigationStartPoint(Direction traverseDirection, GridNode node)
     {
-        var nodes = _automata.GridNodes;
-        if (_index == nodes.Length)
+        var oppositeDirection = traverseDirection.Opposite();
+       
+        var selectedConnection = node.Connections
+            .FirstOrDefault(x => x.Direction.X == oppositeDirection.X);
+        var lastConnection = selectedConnection;
+        while (selectedConnection != null)
+        {
+            selectedConnection = selectedConnection.TargetNode.Connections
+                .FirstOrDefault(x => x.Direction.X == oppositeDirection.X);
+            if (selectedConnection != null)
+            {
+                lastConnection = selectedConnection;
+            }
+        }
+
+        return lastConnection?.TargetNode;
+    }
+    
+    public override GridNode? GetNext()
+    {
+        if (_currentNode is null)
             return null;
-        
-        var currentNode = nodes[_index++];
+
+        var currentNode = _currentNode;
+        var selectedConnection = _currentNode.Connections
+            .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
+        _currentNode = selectedConnection?.TargetNode; 
         return currentNode;
     }
+
+    // public override GridNode? GetNext()
+    // {
+    //     if (_navigationStartPoint is null)
+    //         return null;
+    //    
+    //     var selectedConnection = _navigationStartPoint.Connections
+    //         .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
+    //     var lastConnection = selectedConnection;
+    //     while (selectedConnection != null)
+    //     {
+    //         selectedConnection = selectedConnection.TargetNode.Connections
+    //             .FirstOrDefault(x => x.Direction.X == _traverseDirection.X);
+    //         if (selectedConnection != null)
+    //         {
+    //             lastConnection = selectedConnection;
+    //         }
+    //     }
+    //
+    //     return lastConnection?.TargetNode;
+    // }
 }
 
-public class RightToLeftNavigator
+// public class OneDimensionalNavigator2 : Navigator
+// {
+//     private readonly GridNode[] _gridNodes;
+//     private readonly Direction _traverseDirection;
+//
+//     public OneDimensionalNavigator2(Automata automata, Direction traverseDirection)
+//     {
+//         _traverseDirection = traverseDirection;
+//         _gridNodes = automata.GridNodes;
+//     }
+//
+//     public override GridNode? GetNext()
+//     {
+//         _gridNodes.fir
+//         return null;
+//     }
+// }
+
+public abstract class Navigator
 {
-    private readonly Automata _automata;
-    private int _index = 0;
-
-    public RightToLeftNavigator(Automata automata)
-    {
-        _automata = automata;
-        _index = automata.GridNodes.Length;
-    }
-
-    public GridNode? GetNext()
-    {
-        var nodes = _automata.GridNodes;
-        if (_index == 0)
-            return null;
-        
-        var currentNode = nodes[--_index];
-        return currentNode;
-    }
+    public abstract GridNode? GetNext();
 }
+
+// public class LeftToRightNavigator : Navigator
+// {
+//     private readonly Automata _automata;
+//     private int _index = 0;
+//
+//     public LeftToRightNavigator(Automata automata)
+//     {
+//         _automata = automata;
+//     }
+//
+//     public override GridNode? GetNext()
+//     {
+//         var nodes = _automata.GridNodes;
+//         if (_index == nodes.Length)
+//             return null;
+//         
+//         var currentNode = nodes[_index++];
+//         return currentNode;
+//     }
+// }
+//
+// public class RightToLeftNavigator : Navigator
+// {
+//     private readonly Automata _automata;
+//     private int _index = 0;
+//
+//     public RightToLeftNavigator(Automata automata)
+//     {
+//         _automata = automata;
+//         _index = automata.GridNodes.Length;
+//     }
+//
+//     public override GridNode? GetNext()
+//     {
+//         var nodes = _automata.GridNodes;
+//         if (_index == 0)
+//             return null;
+//         
+//         var currentNode = nodes[--_index];
+//         return currentNode;
+//     }
+// }
 
 public class Automata
 {
+    public GridNode[] GridNodes { get; }
+
     public Automata(GridNode[] gridNodes)
     {
         GridNodes = gridNodes;
     }
-
-    public GridNode[] GridNodes { get; }
 }

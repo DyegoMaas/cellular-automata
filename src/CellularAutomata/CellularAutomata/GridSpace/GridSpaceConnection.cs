@@ -15,8 +15,8 @@ public class GridSpaceConnection
     {
         var connectionA = new GridSpaceConnection(to, direction);
 
-        var inverseDirection = new Direction(direction.X * -1, direction.Y * -1);
-        var connectionB = new GridSpaceConnection(origin, inverseDirection);
+        var oppositeDirection = direction.Opposite();
+        var connectionB = new GridSpaceConnection(origin, oppositeDirection);
 
         origin.AddConnection(connectionA);
         to.AddConnection(connectionB);
