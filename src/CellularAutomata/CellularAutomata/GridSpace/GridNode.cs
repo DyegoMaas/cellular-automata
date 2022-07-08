@@ -1,6 +1,6 @@
 ﻿using CellularAutomata.Cells;
 
-namespace CellularAutomata.Space;
+namespace CellularAutomata.GridSpace;
 
 public class GridNode
 {

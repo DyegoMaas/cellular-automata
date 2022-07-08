@@ -1,4 +1,4 @@
-﻿using CellularAutomata.Space;
+﻿using CellularAutomata.GridSpace;
 using FluentAssertions;
 using Xunit;
 

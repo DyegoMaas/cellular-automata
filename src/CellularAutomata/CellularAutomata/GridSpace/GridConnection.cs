@@ -1,4 +1,4 @@
-﻿namespace CellularAutomata.Space;
+﻿namespace CellularAutomata.GridSpace;
 
 public class GridSpaceConnection
 {
