@@ -1,4 +1,4 @@
-﻿namespace CellularAutomata;
+﻿namespace CellularAutomata.Cells;
 
 public enum CellState
 {

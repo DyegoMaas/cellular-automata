@@ -1,4 +1,6 @@
 using System.Linq;
+using CellularAutomata.Cells;
+using CellularAutomata.Space;
 using FluentAssertions;
 using Xunit;
 

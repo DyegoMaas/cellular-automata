@@ -1,4 +1,6 @@
-﻿namespace CellularAutomata;
+﻿using CellularAutomata.Cells;
+
+namespace CellularAutomata.Space;
 
 public class GridSpace
 {

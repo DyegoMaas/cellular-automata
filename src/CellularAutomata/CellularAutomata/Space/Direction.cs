@@ -1,4 +1,4 @@
-﻿namespace CellularAutomata;
+﻿namespace CellularAutomata.Space;
 
 public record Direction
 {

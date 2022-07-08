@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using CellularAutomata.Cells;
+using CellularAutomata.Space;
 using FluentAssertions;
 using Xunit;
 
@@ -81,17 +83,6 @@ public class GridSpaceTests
         
         var connectionFromBToA = spaceB.Connections.First();
         connectionFromBToA.Direction.Should().Be(new Direction(oppositeX, oppositeY));
-    }
-
-    [Fact(DisplayName = "Direction should point to a direction")]
-    public void ADirectionShouldPointSomewhere()
-    {
-        var instantiateInvalidDirection = () =>
-        {
-            var invalidDirection = new Direction(0, 0);
-        };
-
-        instantiateInvalidDirection.Should().Throw<InvalidDirectionException>().WithMessage("Direction cannot be 0,0");
     }
 
     [Fact(DisplayName = "A grid should be able to define a Moore's Neighborhood")]

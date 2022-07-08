@@ -1,3 +1,3 @@
-﻿namespace CellularAutomata;
+﻿namespace CellularAutomata.Cells;
 
 public record Cell(CellState State);
