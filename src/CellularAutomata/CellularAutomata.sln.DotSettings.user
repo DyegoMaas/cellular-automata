@@ -3,5 +3,8 @@
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.CellTests&lt;/TestId&gt;&#xD;
     &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.GridTests&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.ElementaryAutomataTests.ShouldProduceANewStateBasedOnSurroundingCells&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.ElementaryAutomataTests.ANavigatorShouldTraverseLeftToRight&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::9AC536D7-FDD1-4219-B920-48F76DE1561F::net6.0::CellularAutomata.Tests.ElementaryAutomataTests.ANavigatorShouldTraverseRightToLeft&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
